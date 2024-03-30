@@ -78,8 +78,10 @@ public class CloudVendorAPIController {
 	 * Deleting the Cloud Vendor 
 	 */
 	@DeleteMapping("{vendorId}")
-	public String deleteCloudVendorDetails(@PathVariable String vendorId) {
+	public ResponseEntity<String> deleteCloudVendorDetails(@PathVariable String vendorId) {
+		LOGGER.info("Deleting the Cloud Vendor with vendorId:"+vendorId);
 		this.cloudVendor = null;
-		return "CloudVendor resource deleted successfully";
+		String message = "CloudVendor resource deleted successfully";
+		return ResponseEntity.status(HttpStatus.OK).body(message);
 	}
 }

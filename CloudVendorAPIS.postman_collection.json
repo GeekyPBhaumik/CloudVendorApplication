@@ -1,0 +1,224 @@
+{
+	"info": {
+		"_postman_id": "237631e7-2e05-4a9a-8c2c-5d322c152bd1",
+		"name": "CloudVendorAPIS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "33181732"
+	},
+	"item": [
+		{
+			"name": "UsingPathVaribleGetVendorDetails",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"  ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.vendorId).to.exist.and.to.be.a('string');",
+							"    pm.expect(responseData.vendorName).to.exist.and.to.be.a('string');",
+							"    pm.expect(responseData.vendorAddress).to.exist.and.to.be.a('string');",
+							"    pm.expect(responseData.vendorPhoneNumber).to.exist.and.to.be.a('string');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Vendor phone number is in a valid format\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.vendorPhoneNumber).to.exist.and.to.match(/^\\d{3}-\\d{3}-\\d{4}$/, \"Phone number should be in the format xxx-xxx-xxxx\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 500ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type header is set to application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.equal(\"application/json\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/cloudvendor/1",
+				"description": "Fetching Cloud Vendor Details Using PathVariable"
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllVendorDetails",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.vendorId).to.exist.and.to.be.a('string');",
+							"    pm.expect(responseData.vendorName).to.exist.and.to.be.a('string');",
+							"    pm.expect(responseData.vendorAddress).to.exist.and.to.be.a('string');",
+							"    pm.expect(responseData.vendorPhoneNumber).to.exist.and.to.be.a('string');",
+							"});",
+							"",
+							"",
+							"pm.test(\"VendorId is a non-empty string\", function () {",
+							"  const responseData = pm.response.json();",
+							"",
+							"  pm.expect(responseData.vendorId).to.be.a('string').and.to.have.lengthOf.at.least(1, \"VendorId should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"VendorPhoneNumber is in a valid format\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData.vendorPhoneNumber).to.match(/^\\d{3}-\\d{3}-\\d{4}$/);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 500ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/cloudvendor/getVendorDetails?vendorId=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cloudvendor",
+						"getVendorDetails"
+					],
+					"query": [
+						{
+							"key": "vendorId",
+							"value": "1"
+						}
+					]
+				},
+				"description": "Fetching Cloud Vendor Details Using RequestParam"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateCloudVendor",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"vendorId\":\"C2\",\r\n    \"vendorName\":\"vendor 2\",\r\n    \"vendorAddress\":\"Address 2\",\r\n    \"vendorPhoneNumber\":\"8234001908\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/cloudvendor/createNewCloudVendor",
+				"description": "Creating a Cloud Vendor"
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteCloudVendor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 404\", function () {",
+							"  pm.expect(pm.response.code).to.equal(404);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.timestamp).to.exist.and.to.be.a('string');",
+							"    pm.expect(responseData.status).to.exist.and.to.be.a('number');",
+							"    pm.expect(responseData.error).to.exist.and.to.be.a('string');",
+							"    pm.expect(responseData.path).to.exist.and.to.be.a('string');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Timestamp is in a valid date format\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.timestamp).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/, \"Timestamp is not in a valid date format\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Error message is not empty\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData.error).to.exist.and.to.not.be.empty;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Path is not empty\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData.path).to.exist.and.to.not.be.empty;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "localhost:8080/cloudvendor/deleteCloudVendor/7",
+				"description": "Deleting a Cloud Vendor"
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"vendorId\":\"C3\",\r\n    \"vendorName\":\"vendor 2\",\r\n    \"vendorAddress\":\"Address 2\",\r\n    \"vendorPhoneNumber\":\"8234001908\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/cloudvendor/updateCloudVendor",
+				"description": "Updating a Cloud Vendor API"
+			},
+			"response": []
+		}
+	]
+}

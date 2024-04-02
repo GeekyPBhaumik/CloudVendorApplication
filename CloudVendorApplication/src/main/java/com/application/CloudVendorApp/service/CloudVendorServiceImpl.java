@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import com.application.CloudVendorApp.exception.CloudVendorNotFoundException;
 import com.application.CloudVendorApp.model.CloudVendor;
 import com.application.CloudVendorApp.repository.CloudVendorRepository;
 
@@ -51,8 +53,9 @@ public class CloudVendorServiceImpl implements CloudVendorService{
 		Optional<CloudVendor> cloudVendorDetail = cloudVendorRepo.findById(vendorId);
 		if(cloudVendorDetail.isEmpty() && LOGGER.isErrorEnabled()) {
 			LOGGER.info(String.format("No Cloud Vendor With VendorId=%s", vendorId));
+			throw new CloudVendorNotFoundException("Cloud Vendor Not Found For VendorId:"+vendorId);
 		}
-		return (cloudVendorDetail.isPresent())?cloudVendorDetail.get():null;
+		return (cloudVendorDetail.isPresent())?cloudVendorDetail.get():null;                
 	}
 
 	@Override

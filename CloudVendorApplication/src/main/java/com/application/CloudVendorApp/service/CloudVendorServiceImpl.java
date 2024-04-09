@@ -51,7 +51,7 @@ public class CloudVendorServiceImpl implements CloudVendorService{
 	@Override
 	public CloudVendor getCloudVendor(String vendorId) {
 		Optional<CloudVendor> cloudVendorDetail = cloudVendorRepo.findById(vendorId);
-		if(cloudVendorDetail.isEmpty() && LOGGER.isErrorEnabled()) {
+		if((cloudVendorDetail.isEmpty()) && LOGGER.isErrorEnabled()) {
 			LOGGER.info(String.format("No Cloud Vendor With VendorId=%s", vendorId));
 			throw new CloudVendorNotFoundException("Cloud Vendor Not Found For VendorId:"+vendorId);
 		}

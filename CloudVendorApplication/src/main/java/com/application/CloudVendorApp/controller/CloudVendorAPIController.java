@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.application.CloudVendorApp.model.CloudVendor;
+import com.application.CloudVendorApp.response.CloudVendorResponseHandler;
 import com.application.CloudVendorApp.service.CloudVendorService;
 
 @RestController
@@ -33,31 +34,29 @@ public class CloudVendorAPIController {
 	 * Fetching a cloud vendor using vendor Id
 	 */
 	@GetMapping("{vendorId}")
-	public ResponseEntity<CloudVendor> getCloudVendorDetails(@PathVariable String vendorId) {
-		if(LOGGER.isErrorEnabled()) {
-			LOGGER.info(String.format("No Cloud Vendor With VendorId=%s", vendorId));
-		}		
+	public ResponseEntity<Object> getCloudVendorDetails(@PathVariable String vendorId) {	
 	    CloudVendor cloudVendor = cloudVendorService.getCloudVendor(vendorId);
 	    if (cloudVendor == null) {
-	        // Return a 404 Not Found status if the resource is not found
-	        return ResponseEntity.notFound().build();
+	        //Return a 404 Not Found status if the resource is not found	        
+	    	//Custom Response Handling
+	        return CloudVendorResponseHandler.responseHandler("No Cloud Vendor Found For VendorId:"+vendorId, cloudVendor, HttpStatus.NOT_FOUND);
 	    }
 	    // Return the cloud vendor with a 200 OK status
-	    return ResponseEntity.ok(cloudVendor);
+	    return CloudVendorResponseHandler.responseHandler("Requested Cloud Vendor Details Found For VendorId:"+vendorId, cloudVendor, HttpStatus.OK);
 	}	
 	/**
 	 * Fetching All the cloud vendors 
 	 */
 	@GetMapping("/getVendorDetails")
-	public ResponseEntity<List<CloudVendor>> getAllCloudVendorDetails() {
+	public ResponseEntity<Object> getAllCloudVendorDetails() {
 		if(LOGGER.isErrorEnabled()) {
 			LOGGER.info("No Cloud Vendor Details");
 		}	
 		List<CloudVendor> cloudVendor = cloudVendorService.getAllCloudVendor();
 	    if (cloudVendor.isEmpty()) {	        
-	        return ResponseEntity.notFound().build();
+	        return CloudVendorResponseHandler.responseHandler("No Cloud Vendor Details Found", cloudVendor, HttpStatus.NOT_FOUND);
 	    }
-	    return ResponseEntity.ok(cloudVendor);
+	    return CloudVendorResponseHandler.responseHandler("Requested All Cloud Vendor Details Found", cloudVendor, HttpStatus.OK);
 	}	
 	/**
 	 * Creating a Cloud Vendor

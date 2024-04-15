@@ -1,13 +1,20 @@
 package com.application.CloudVendorApp.model;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Entity
 @Table(name="cloud_vendor_info")
+@OpenAPIDefinition(info = @Info(title = "Cloud Vendor API", version = "1.0"))
+@Tag(name = "User", description = "This model holds the Cloud vendor App  Details")
 public class CloudVendor {
 	 @Id
+	 @Schema(description = "Unique ID" , example="C2")
      private String vendorId;
      private String vendorName;
      private String vendorAddress;

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.application.CloudVendorApp.model.CloudVendor;
 import com.application.CloudVendorApp.response.CloudVendorResponseHandler;
 import com.application.CloudVendorApp.service.CloudVendorService;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/cloudvendor")
@@ -34,6 +35,10 @@ public class CloudVendorAPIController {
 	 * Fetching a cloud vendor using vendor Id
 	 */
 	@GetMapping("{vendorId}")
+	@Operation(summary="Get Cloud Vendor Details By VendorID",
+			   description = "This operation retrieves detailed information about an cloud vendor by its ID.\n"
+                    + "Provide the vendor ID in the path parameter."
+                    + "Example: /cloudvendor/{vendorId}")
 	public ResponseEntity<Object> getCloudVendorDetails(@PathVariable String vendorId) {	
 	    CloudVendor cloudVendor = cloudVendorService.getCloudVendor(vendorId);
 	    if (cloudVendor == null) {
@@ -48,6 +53,7 @@ public class CloudVendorAPIController {
 	 * Fetching All the cloud vendors 
 	 */
 	@GetMapping("/getVendorDetails")
+	@Operation(summary="Get All Cloud Vendor Details")
 	public ResponseEntity<Object> getAllCloudVendorDetails() {
 		if(LOGGER.isErrorEnabled()) {
 			LOGGER.info("No Cloud Vendor Details");
@@ -62,6 +68,7 @@ public class CloudVendorAPIController {
 	 * Creating a Cloud Vendor
 	 */
 	@PostMapping("/createNewCloudVendor")
+	@Operation(summary="Create New Cloud Vendor")
 	public ResponseEntity<String> createCloudVendorDetails(@RequestBody CloudVendor cloudVendor) {
 	    LOGGER.info("Creating the Cloud Vendor Details");
 	    String message = cloudVendorService.createVendor(cloudVendor);
@@ -71,6 +78,7 @@ public class CloudVendorAPIController {
 	 * Updating the Cloud Vendor Details
 	 */
 	@PutMapping("/updateCloudVendor")
+	@Operation(summary="Update All Cloud Vendor Details")
 	public ResponseEntity<String> updateCloudVendorDetails(@RequestBody CloudVendor cloudVendor) {
 		LOGGER.info("Updating the Cloud Vendor Details");
 		String message = cloudVendorService.updateVendor(cloudVendor);
@@ -80,6 +88,7 @@ public class CloudVendorAPIController {
 	 * Deleting the Cloud Vendor 
 	 */
 	@DeleteMapping("{vendorId}")
+	@Operation(summary="Delete Cloud Vendor By VendorId")
 	public ResponseEntity<String> deleteCloudVendorDetails(@PathVariable String vendorId) {
 		if(LOGGER.isErrorEnabled()) {
 		   LOGGER.info(String.format("Deleting the Cloud Vendor with vendorId=%s", vendorId));

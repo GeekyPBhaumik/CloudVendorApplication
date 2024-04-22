@@ -12,7 +12,7 @@
    - DELETE: Delete a product by ID
 
 3. Implemented custom exception handling:
-   - Define custom exceptions (e.g., `ResourceNotFoundException`, `BadRequestException`)
+   - Define custom exceptions (e.g., `CloudVendorNotFoundException`, `BadRequestException`)
    - Use exception handlers in the controller to return appropriate HTTP responses
 
 4. Implemented custom response handling:

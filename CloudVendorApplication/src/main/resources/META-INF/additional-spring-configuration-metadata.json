@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "othercloud.app.address",
+    "type": "java.lang.String",
+    "description": "A description for 'othercloud.app.address'"
+  },
+  {
+    "name": "othercloud.app.port",
+    "type": "java.lang.String",
+    "description": "A description for 'othercloud.app.port'"
+  },
+  {
+    "name": "othercloud.app.port",
+    "type": "java.lang.String",
+    "description": "A description for 'othercloud.app.port'"
+  }
+]}
